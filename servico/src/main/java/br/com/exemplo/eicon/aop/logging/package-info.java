@@ -1,0 +1,1 @@
+package br.com.exemplo.eicon.aop.logging;

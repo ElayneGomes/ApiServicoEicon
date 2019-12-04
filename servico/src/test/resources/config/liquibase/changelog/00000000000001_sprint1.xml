@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="1" author="deividy.pinheiro">
+        <sql>
+
+            create table SMD.TB_NATUREZA
+            (
+            CO_SEQ_NATUREZA NUMBER not null
+            constraint PK_NATUREZA
+            primary key,
+            NM_NATUREZA VARCHAR2(200 char) not null,
+            CD_NATUREZA VARCHAR2(7 char)
+            );
+
+            CREATE SEQUENCE SMD.SQ_NATUREZA;
+
+            create table SMD.TB_ORGAO
+            (
+            CO_SEQ_ORGAO NUMBER not null
+            constraint PK_ORGAO
+            primary key,
+            NM_ORGAO VARCHAR2(200 char) not null,
+            NM_SIGLA VARCHAR2(200 char),
+            IN_INTERNO CHAR(1)
+            );
+
+            CREATE SEQUENCE SMD.SQ_ORGAO;
+
+            create table SMD.TB_SECRETARIA
+            (
+                CO_SEQ_SECRETARIA NUMBER             not null
+                constraint PK_SECRETARIA
+                primary key,
+                NM_SECRETARIA     VARCHAR2(200 char) not null,
+                NM_SIGLA     VARCHAR2(10 char)
+            );
+
+            CREATE SEQUENCE SMD.SQ_SECRETARIA;
+
+            create table SMD.TB_MINISTRO
+            (
+            CO_SEQ_MINISTRO NUMBER             not null
+            constraint PK_MINISTRO
+            primary key,
+            NM_MINISTRO     VARCHAR2(200 char) not null
+            );
+
+            CREATE SEQUENCE SMD.SQ_MINISTRO;
+
+
+            create table SMD.TB_UNIDADE
+            (
+            CO_SEQ_UNIDADE NUMBER not null
+            constraint PK_UNIDADE
+            primary key,
+            DS_UNIDADE VARCHAR2(200 char) not null,
+            NM_SIGLA VARCHAR2(100 char) not null,
+            CD_SEI NUMBER
+            );
+
+            CREATE SEQUENCE SMD.SQ_UNIDADE;
+
+            create table SMD.TB_UNIDADE_TECNICA
+            (
+            CO_SEQ_UNIDADE NUMBER not null
+            constraint PK_UNIDADE_TECNICA
+            primary key,
+            DS_UNIDADE VARCHAR2(200 char) not null,
+            NM_SIGLA VARCHAR2(100 char) not null,
+            CD_SEI NUMBER
+            );
+
+            CREATE SEQUENCE SMD.SQ_UNIDADE_TECNICA;
+
+
+            create table SMD.TB_ACORDAO
+            (
+            CO_SEQ_ACORDAO NUMBER             not null
+            constraint PK_ACORDAO
+            primary key,
+            NU_PROCESSO_SEI     VARCHAR2(200 char) not null,
+            NU_OFICIO     VARCHAR2(100 char),
+            NU_ACORDAO     VARCHAR2(100 char),
+            CO_SEQ_SECRETARIA NUMBER,
+            CO_SEQ_ORGAO NUMBER,
+            NU_FREQUENCIA_OFICIO NUMBER,
+            NU_FREQUENCIA_ACORDAO NUMBER,
+            NU_PROCESSO_ORGAO_CONTROLE NUMBER,
+            NU_FREQUENCIA_ORGAO_CONTROLE NUMBER,
+            DT_ENTRADA DATE,
+            CO_SEQ_NATUREZA NUMBER,
+            CO_SEQ_MINISTRO NUMBER
+            );
+
+            CREATE SEQUENCE SMD.SQ_ACORDAO;
+
+            ALTER TABLE SMD.TB_ACORDAO
+            ADD CONSTRAINT FK_TB_ACORDAO_TB_MINISTRO
+            FOREIGN KEY (CO_SEQ_MINISTRO)
+            REFERENCES SMD.TB_MINISTRO(CO_SEQ_MINISTRO);
+
+            ALTER TABLE SMD.TB_ACORDAO
+            ADD CONSTRAINT FK_TB_ACORDAO_TB_NATUREZA
+            FOREIGN KEY (CO_SEQ_NATUREZA)
+            REFERENCES TB_NATUREZA(CO_SEQ_NATUREZA);
+
+            ALTER TABLE SMD.TB_ACORDAO
+            ADD CONSTRAINT FK_TB_ACORDAO_TB_ORGAO
+            FOREIGN KEY (CO_SEQ_ORGAO)
+            REFERENCES TB_ORGAO(CO_SEQ_ORGAO);
+
+            ALTER TABLE SMD.TB_ACORDAO
+            ADD CONSTRAINT FK_TB_ACORDAO_TB_SECRETARIA
+            FOREIGN KEY (CO_SEQ_SECRETARIA)
+            REFERENCES TB_SECRETARIA(CO_SEQ_SECRETARIA);
+
+            create table SMD.TB_ACORDAO_ITEM
+            (
+            CO_SEQ_ACORDAO_ITEM NUMBER             not null
+            constraint PK_ACORDAO_ITEM
+            primary key,
+            DS_SOLICITACAO     VARCHAR2(800 char) not null,
+            DT_ENTRADA DATE,
+            DT_ENTRADA_ITEM DATE,
+            DT_VENCIMENTO DATE,
+            CO_SEQ_UNIDADE_RESP NUMBER,
+            NU_PRAZO NUMBER,
+            NU_PRAZO_VENCER NUMBER,
+            NU_PROCESSO_ORIGEM varchar2(20),
+            ST_CONCLUSAO varchar(15),
+            ST_RESPOSTA varchar(15),
+            CO_SEQ_ACORDAO NUMBER
+            );
+
+            ALTER TABLE SMD.TB_ACORDAO_ITEM
+            ADD CONSTRAINT FK_TB_ACORDAO_ITEM_TB_UNIDADE
+            FOREIGN KEY (CO_SEQ_UNIDADE_RESP)
+            REFERENCES SMD.TB_UNIDADE(CO_SEQ_UNIDADE);
+
+            ALTER TABLE SMD.TB_ACORDAO_ITEM
+            ADD CONSTRAINT FK_TB_ACORDAO_ITEM_TB_ACORDAO
+            FOREIGN KEY (CO_SEQ_ACORDAO)
+            REFERENCES SMD.TB_ACORDAO(CO_SEQ_ACORDAO);
+
+            CREATE SEQUENCE SMD.SQ_ACORDAO_ITEM;
+
+            create table SMD.TB_ACORDAO_ITEM_HIST_VENC
+            (
+            CO_SEQ_ACORDAO_ITEM_HIST_VENC NUMBER             not null
+            constraint PK_ACORDAO_ITEM_HIST_VENC
+            primary key,
+            DT_CADASTRO DATE,
+            DT_ENTRADA_ITEM DATE,
+            DT_VENCIMENTO DATE,
+            NU_PRAZO NUMBER,
+            CO_SEQ_ACORDAO_ITEM NUMBER
+            );
+
+            ALTER TABLE SMD.TB_ACORDAO_ITEM_HIST_VENC
+            ADD CONSTRAINT FK_TB_ACORDAO_ITEM_HIST_VENC
+            FOREIGN KEY (CO_SEQ_ACORDAO_ITEM)
+            REFERENCES SMD.TB_ACORDAO_ITEM(CO_SEQ_ACORDAO_ITEM);
+
+            CREATE SEQUENCE SMD.SQ_ACORDAO_ITEM_HIST_VENC;
+
+
+            create table SMD.TB_ACORDAO_ITEM_HIST_OBS
+            (
+            CO_SEQ_ACORDAO_ITEM_HIST_OBS NUMBER             not null
+            constraint PK_ACORDAO_ITEM_HIST_OBS
+            primary key,
+            DT_CADASTRO DATE,
+            DS_OBSERVACAO VARCHAR2(2000),
+            CO_SEQ_ACORDAO_ITEM NUMBER
+            );
+
+            ALTER TABLE SMD.TB_ACORDAO_ITEM_HIST_OBS
+            ADD CONSTRAINT FK_TB_ACORDAO_ITEM_HIST_OBS
+            FOREIGN KEY (CO_SEQ_ACORDAO_ITEM)
+            REFERENCES SMD.TB_ACORDAO_ITEM(CO_SEQ_ACORDAO_ITEM);
+
+            CREATE SEQUENCE SQ_ACORDAO_ITEM_HIST_OBS;
+
+        </sql>
+    </changeSet>
+
+    <!--changeSet id="6" author="deividy.pinheiro">
+        <sql>
+
+            insert into SMD.TB_NATUREZA (CO_SEQ_NATUREZA, NM_NATUREZA, CD_NATUREZA) VALUES (1, 'Natureza', 1);
+
+            INSERT INTO SMD.TB_SECRETARIA (CO_SEQ_SECRETARIA, NM_SECRETARIA, NM_SIGLA) VALUES (1, 'Secretaria de Teste', 'ST');
+
+            insert into SMD.TB_MINISTRO (CO_SEQ_MINISTRO, NM_MINISTRO) values (1, 'Ministro');
+
+            INSERT INTO SMD.TB_UNIDADE (CO_SEQ_UNIDADE, DS_UNIDADE, NM_SIGLA, CD_SEI) VALUES (1, 'Unidade', 'UN', 111);
+
+            INSERT INTO SMD.TB_UNIDADE_TECNICA (CO_SEQ_UNIDADE, DS_UNIDADE, NM_SIGLA) VALUES (1, 'Unidade Tecnica', 'UT');
+
+        </sql>
+    </changeSet -->
+
+
+
+</databaseChangeLog>

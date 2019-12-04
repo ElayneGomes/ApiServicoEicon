@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="00000000000001" author="deividy.pinheiro">
+		<insert tableName="TB_MINISTRO" schemaName="SMD">
+			<column name="CO_SEQ_MINISTRO" value="1" />
+			<column name="NM_MINISTRO" value="Ministro Fulano de Tal" />
+		</insert>
+		<insert tableName="TB_MINISTRO" schemaName="SMD">
+			<column name="CO_SEQ_MINISTRO" value="2" />
+			<column name="NM_MINISTRO" value="Ministro Fulano da Silva" />
+		</insert>
+	</changeSet>
+
+	<changeSet id="00000000000002" author="deividy.pinheiro">
+		<insert tableName="TB_NATUREZA" schemaName="SMD">
+			<column name="CO_SEQ_NATUREZA" value="1" />
+			<column name="NM_NATUREZA" value="Ciência" />
+			<column name="CD_NATUREZA" value="1" />
+		</insert>
+		<insert tableName="TB_NATUREZA" schemaName="SMD">
+			<column name="CO_SEQ_NATUREZA" value="2" />
+			<column name="NM_NATUREZA" value="Diligência" />
+			<column name="CD_NATUREZA" value="2" />
+		</insert>
+	</changeSet>
+
+	<changeSet id="00000000000003" author="deividy.pinheiro">
+		<insert tableName="TB_SECRETARIA" schemaName="SMD">
+			<column name="CO_SEQ_SECRETARIA" value="1" />
+			<column name="NM_SECRETARIA" value="Secretaria 1" />
+			<column name="NM_SIGLA" value="SE1" />
+		</insert>
+		<insert tableName="TB_SECRETARIA" schemaName="SMD">
+			<column name="CO_SEQ_SECRETARIA" value="2" />
+			<column name="NM_SECRETARIA" value="Secretaria 2" />
+			<column name="NM_SIGLA" value="SE2" />
+		</insert>
+	</changeSet>
+
+	<changeSet id="00000000000004" author="deividy.pinheiro">
+		<insert tableName="TB_UNIDADE" schemaName="SMD">
+			<column name="CO_SEQ_UNIDADE" value="1" />
+			<column name="DS_UNIDADE" value="Unidade 1" />
+			<column name="NM_SIGLA" value="UN1" />
+			<column name="CD_SEI" value="1" />
+		</insert>
+		<insert tableName="TB_UNIDADE" schemaName="SMD">
+			<column name="CO_SEQ_UNIDADE" value="2" />
+			<column name="DS_UNIDADE" value="Unidade 2" />
+			<column name="NM_SIGLA" value="UN2" />
+			<column name="CD_SEI" value="2" />
+		</insert>
+	</changeSet>
+
+	<changeSet id="00000000000005" author="deividy.pinheiro">
+		<insert tableName="TB_UNIDADE_TECNICA" schemaName="SMD">
+			<column name="CO_SEQ_UNIDADE" value="1" />
+			<column name="DS_UNIDADE" value="Unidade 1" />
+			<column name="NM_SIGLA" value="UN1" />
+		</insert>
+		<insert tableName="TB_UNIDADE_TECNICA" schemaName="SMD">
+			<column name="CO_SEQ_UNIDADE" value="2" />
+			<column name="DS_UNIDADE" value="Unidade Tecnica 2" />
+			<column name="NM_SIGLA" value="UN2" />
+		</insert>
+	</changeSet>
+
+	<changeSet id="00000000000006" author="deividy.pinheiro">
+		<insert tableName="TB_ORGAO" schemaName="SMD">
+			<column name="CO_SEQ_ORGAO" value="1" />
+			<column name="NM_ORGAO" value="Orgao 1" />
+			<column name="NM_SIGLA" value="O1" />
+			<column name="IN_INTERNO" value="1" />
+		</insert>
+		<insert tableName="TB_ORGAO" schemaName="SMD">
+			<column name="CO_SEQ_ORGAO" value="2" />
+			<column name="NM_ORGAO" value="Orgao 2" />
+			<column name="NM_SIGLA" value="O2" />
+			<column name="IN_INTERNO" value="0" />
+		</insert>
+	</changeSet>
+
+</databaseChangeLog>

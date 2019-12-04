@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+	<changeSet id="2" author="deividy.pinheiro">
+		<sql>
+
+			create table TB_PROGRAMA
+			(
+			CO_SEQ_PROGRAMA NUMBER             NOT NULL
+			constraint PK_PROGRAMA
+			primary key,
+			NM_PROGRAMA                        VARCHAR2(200 char) NOT NULL,
+			ST_ATIVO                               VARCHAR2(3 char) NOT NULL
+			);
+			create sequence SQ_PROGRAMA;
+
+		</sql>
+	</changeSet>
+
+
+</databaseChangeLog>

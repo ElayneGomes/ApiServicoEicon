@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+	<changeSet id="1" author="deividy.pinheiro">
+		<sql>
+
+			create table TB_DILIGENCIA
+			(
+			CO_SEQ_ACORDAO NUMBER             not null
+			constraint PK_DILIGENCIA
+			primary key,
+			NU_PROCESSO_SEI     VARCHAR2(200 char) not null,
+			NU_NUMERO     VARCHAR2(100 char),
+			DS_REFERENCIA     VARCHAR2(500 char),
+			CO_SEQ_SECRETARIA NUMBER,
+			DS_ASSUNTO varchar2(500),
+			NU_PRAZO NUMBER,
+			DT_ENTRADA DATE,
+			DT_CADASTRO DATE,
+			ST_CONCLUSAO varchar(15),
+			DS_SITUACAO varchar2(1000),
+			DT_SAIDA DATE
+			);
+
+			CREATE SEQUENCE SQ_DILIGENCIA;
+
+			ALTER TABLE TB_DILIGENCIA
+			ADD CONSTRAINT FK_TB_DILIGENCIA_TB_SECRETARIA
+			FOREIGN KEY (CO_SEQ_SECRETARIA)
+			REFERENCES TB_SECRETARIA(CO_SEQ_SECRETARIA);
+
+			create table TB_DILIGENCIA_ITEM
+			(
+			CO_SEQ_DILIGENCIA_ITEM NUMBER             not null
+			constraint PK_DILIGENCIA_ITEM
+			primary key,
+			DS_SITUACAO     VARCHAR2(2000 char) not null,
+			CO_SEQ_DILIGENCIA NUMBER not null,
+			DT_CADASTRO     DATE,
+			ST_CONCLUSAO VARCHAR(15),
+			CO_SEQ_SECRETARIA NUMBER
+			);
+
+			CREATE SEQUENCE SQ_DILIGENCIA_ITEM;
+
+			ALTER TABLE TB_DILIGENCIA_ITEM
+			ADD CONSTRAINT FK_TB_DILIGENCIA_ITEM_TB_DILIG
+			FOREIGN KEY (CO_SEQ_DILIGENCIA)
+			REFERENCES TB_DILIGENCIA(CO_SEQ_DILIGENCIA);
+
+			ALTER TABLE TB_DILIGENCIA_ITEM
+			ADD CONSTRAINT FK_TB_DILIGENCIA_ITEM_TB_SEC
+			FOREIGN KEY (CO_SEQ_SECRETARIA)
+			REFERENCES TB_SECRETARIA(CO_SEQ_SECRETARIA);
+
+			create table TB_DILIGENCIA_HIST_VENC
+			(
+			CO_SEQ_DILIGENCIA_HIST_VENC NUMBER             not null
+			constraint PK_DILIGENCIA_HIST_VENC
+			primary key,
+			DT_CADASTRO DATE,
+			DT_ENTRADA_ITEM DATE,
+			DT_VENCIMENTO DATE,
+			NU_PRAZO NUMBER,
+			CO_SEQ_DILIGENCIA NUMBER
+			);
+
+			ALTER TABLE TB_DILIGENCIA_HIST_VENC
+			ADD CONSTRAINT FK_TB_DILIGENCIA_HIST_VENC
+			FOREIGN KEY (CO_SEQ_DILIGENCIA)
+			REFERENCES TB_DILIGENCIA(CO_SEQ_DILIGENCIA);
+
+			CREATE SEQUENCE SQ_DILIGENCIA_HIST_VENC;
+
+		</sql>
+	</changeSet>
+
+
+</databaseChangeLog>
