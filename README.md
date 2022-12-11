@@ -1,4 +1,4 @@
-# API Eicon 
+# API 
 
 - Exposição de endpoint para: 
 	- Pedidos Clientes
